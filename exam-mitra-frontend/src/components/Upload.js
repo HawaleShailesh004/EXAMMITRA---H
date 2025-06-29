@@ -261,11 +261,14 @@ const Upload = () => {
 
       setStatus("📡 Sending extracted text to backend...");
 
-      const response = await fetch("http://localhost:4000/extract-text", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: mergedText }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/extract-text`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: mergedText }),
+        }
+      );
 
       const data = await response.json();
 

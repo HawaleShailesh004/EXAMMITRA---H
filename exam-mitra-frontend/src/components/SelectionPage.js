@@ -26,14 +26,27 @@ const SelectionPage = () => {
   const semesters = [3, 4, 5, 6, 7, 8];
 
   // Roman numerals for proper subject title formatting
-  const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+  const romanNumerals = [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+  ];
 
   // Format subject title: capitalizes words except Roman numerals
   const formatTitle = (title) =>
     title
       .split(" ")
       .map((word) =>
-        romanNumerals.includes(word.toUpperCase()) ? word.toUpperCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        romanNumerals.includes(word.toUpperCase())
+          ? word.toUpperCase()
+          : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
       )
       .join(" ");
 
@@ -61,7 +74,11 @@ const SelectionPage = () => {
       setError("");
       try {
         const res = await fetch(
-          `http://localhost:4000/dropdowns/subjects?branch=${encodeURIComponent(branch)}&semester=${semester}`
+          `${
+            process.env.REACT_APP_API_BASE_URL
+          }/dropdowns/subjects?branch=${encodeURIComponent(
+            branch
+          )}&semester=${semester}`
         );
         const data = await res.json();
         const cleanedSubjects = (data.subjects || []).map((sub) => ({
@@ -91,7 +108,11 @@ const SelectionPage = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/dropdowns/papers?branch=${encodeURIComponent(branch)}&semester=${semester}&subject=${encodeURIComponent(subject.title)}`
+        `${
+          process.env.REACT_APP_API_BASE_URL
+        }/dropdowns/papers?branch=${encodeURIComponent(
+          branch
+        )}&semester=${semester}&subject=${encodeURIComponent(subject.title)}`
       );
       const data = await res.json();
 
@@ -127,11 +148,14 @@ const SelectionPage = () => {
       }
 
       // Post extracted text to backend for question extraction
-      const response = await fetch("http://localhost:4000/extract-text", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: mergedText }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}//extract-text`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: mergedText }),
+        }
+      );
       const data = await response.json();
 
       if (!data || !data.questions?.length) {
@@ -166,13 +190,20 @@ const SelectionPage = () => {
       <div className="selection-page fadeIn">
         <main className="main-section">
           <h1>Select Your Details to Start Exploring!</h1>
-          <p>Choose your branch, semester, and subject to access previous year papers and important questions.</p>
+          <p>
+            Choose your branch, semester, and subject to access previous year
+            papers and important questions.
+          </p>
 
           <div className="selection-form">
             {/* Branch Dropdown */}
             <div className="dropdown">
               <label htmlFor="branch-select">Branch:</label>
-              <select id="branch-select" value={branch} onChange={handleBranchChange}>
+              <select
+                id="branch-select"
+                value={branch}
+                onChange={handleBranchChange}
+              >
                 <option value="">Select Branch</option>
                 {branches.map((b, idx) => (
                   <option key={idx} value={b}>
@@ -185,7 +216,11 @@ const SelectionPage = () => {
             {/* Semester Dropdown */}
             <div className="dropdown">
               <label htmlFor="semester-select">Semester:</label>
-              <select id="semester-select" value={semester} onChange={handleSemesterChange}>
+              <select
+                id="semester-select"
+                value={semester}
+                onChange={handleSemesterChange}
+              >
                 <option value="">Select Semester</option>
                 {semesters.map((s, idx) => (
                   <option key={idx} value={s}>
@@ -231,7 +266,9 @@ const SelectionPage = () => {
             {error && <p className="error-text">{error}</p>}
 
             {/* Info Text */}
-            <p className="info-text">Tip: You can change selections anytime from your dashboard!</p>
+            <p className="info-text">
+              Tip: You can change selections anytime from your dashboard!
+            </p>
           </div>
 
           {/* Display available question papers */}
@@ -257,10 +294,14 @@ const SelectionPage = () => {
                         <td>
                           {/* Toggle select/deselect QP */}
                           <button
-                            className={`qp-table-btn ${isSelected ? "selected" : "action-btn"}`}
+                            className={`qp-table-btn ${
+                              isSelected ? "selected" : "action-btn"
+                            }`}
                             onClick={() => {
                               setSelectedQps((prev) =>
-                                isSelected ? prev.filter((url) => url !== qp.url) : [...prev, qp.url]
+                                isSelected
+                                  ? prev.filter((url) => url !== qp.url)
+                                  : [...prev, qp.url]
                               );
                             }}
                             type="button"

@@ -102,7 +102,8 @@ router.get("/dropdowns/subjects", async (req, res) => {
 
   if (!branch || !semester) {
     return res.status(400).json({ error: "Branch and semester are required." });
-  }
+  } 
+  // normal 
 
   const kebabBranch = branch.toLowerCase().replace(/\s+/g, "-");
   const url = `https://muquestionpapers.com/be/${kebabBranch}/semester-${semester}`;

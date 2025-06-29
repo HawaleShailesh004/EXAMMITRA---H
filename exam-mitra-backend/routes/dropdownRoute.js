@@ -1,7 +1,10 @@
 import express from "express";
-import chromium from "chrome-aws-lambda"; // ✅ Required for Vercel compatibility
+import puppeteer from "puppeteer-core";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = express.Router();
+const CHROME_PATH = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 // 🧠 Get all papers for a subject
 router.get("/dropdowns/papers", async (req, res) => {
@@ -16,10 +19,10 @@ router.get("/dropdowns/papers", async (req, res) => {
   console.log(`📄 Navigating to: ${url}`);
 
   try {
-    const browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: CHROME_PATH,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     const page = await browser.newPage();
@@ -80,7 +83,7 @@ router.get("/dropdowns/papers", async (req, res) => {
 
     return res.json({ papers });
   } catch (err) {
-    console.error("❌ Puppeteer Error:", err);
+    console.error("❌ Puppeteer Error:", err.message);
     return res.status(500).json({ error: "Failed to fetch papers." });
   }
 });
@@ -98,18 +101,16 @@ router.get("/dropdowns/subjects", async (req, res) => {
   console.log(`📚 Getting subjects from: ${url}`);
 
   try {
-    const browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+    const browser = await puppeteer.launch({
+      headless: "new",
+      executablePath: CHROME_PATH,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "domcontentloaded" });
 
-    await page.waitForSelector("th.thstyle center.responsivecolspan", {
-      timeout: 10000,
-    });
+    await page.waitForSelector("th.thstyle center.responsivecolspan", { timeout: 30000 });
 
     const subjects = await page.$$eval(
       "th.thstyle center.responsivecolspan",
@@ -135,7 +136,7 @@ router.get("/dropdowns/subjects", async (req, res) => {
     await browser.close();
     return res.json({ subjects });
   } catch (err) {
-    console.error("❌ Error scraping subjects:", err);
+    console.error("❌ Error scraping subjects:", err.message);
     return res.status(500).json({ error: "Failed to fetch subjects." });
   }
 });

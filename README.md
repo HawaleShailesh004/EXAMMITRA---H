@@ -59,23 +59,29 @@ User uploads or selects question papers → Backend extracts text and questions 
 1. Clone the repository:  
 ```bash
    git clone https://github.com/HawaleShailesh004/EXAMMITRA---H.git
+```
 
 
 2. Navigate to the frontend and backend folders:
 
+```bash
 cd exam-mitra-frontend
 npm install
 cd ../exam-mitra-backend
 npm install
+```
 
 3. Setup environment variables (.env) for API keys and Appwrite credentials in both frontend and backend as needed. (No direct user input for API keys required)
 
 4. Run the backend server:
 
+```bash
 npm run start
+```
 
-Run the frontend development server:
+5. Run the frontend development server:
 
+```bash
 npm start
 ```
 

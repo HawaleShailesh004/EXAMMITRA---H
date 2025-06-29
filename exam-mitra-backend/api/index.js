@@ -12,11 +12,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/", extractRoutes);
-app.use("/", dropdownRoutes);
+// Vercel will prefix with /api, so add it here
+app.use("/api", extractRoutes);
+app.use("/api", dropdownRoutes);
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("🚀 ExamMitra Backend Deployed via Vercel!");
 });
 
-export const handler = serverless(app); // Required for Vercel
+export const handler = serverless(app);

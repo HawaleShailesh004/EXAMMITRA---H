@@ -1,0 +1,211 @@
+/* Main container padding to clear fixed header */
+.main-container {
+  padding-top: 8rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+/* Upload content container */
+.upload-container {
+  padding: 2rem 10rem;
+  color: #2e7d32;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Info text below title */
+.format-info {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #4caf50;
+}
+
+/* Dropzone style */
+.dropzone {
+  padding: 2rem;
+  border: 2px dashed #81c784;
+  border-radius: 10px;
+  background-color: #ffffff;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.dropzone:hover {
+  background: #e8f5e9;
+}
+
+/* File preview container */
+.file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Each file card */
+.file-card {
+  padding: 0.5rem 1rem;
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* Extract questions button */
+.extract-btn {
+  background: linear-gradient(135deg, #002f00, #006016);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: all 0.2s ease;
+}
+
+.extract-btn:hover {
+  opacity: 0.8;
+  scale: 1.02;
+}
+
+/* Question table styles */
+.question-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+.question-table th,
+.question-table td {
+  border: 1px solid #ccc;
+  padding: 1rem 0.8rem;
+  text-align: left;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+
+.question-table th {
+  background-color: #a5d6a7;
+  color: #1b5e20;
+}
+
+/* Edit & Save buttons in question table */
+.edit-btn,
+.save-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #002f00, #006016);
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.save-btn {
+  background-color: #007bff;
+}
+
+/* Loading spinner container */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid var(--light-gray);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status text below upload area */
+.status-text {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Responsive Styles */
+
+/* Tablets and below */
+@media (max-width: 768px) {
+  .upload-container {
+    padding: 2rem 3rem;
+  }
+
+  .extract-btn {
+    width: 100%;
+  }
+
+  .question-table th,
+  .question-table td {
+    font-size: 0.9rem;
+    padding: 0.8rem 0.5rem;
+  }
+}
+
+/* Small mobiles */
+@media (max-width: 480px) {
+  .upload-container {
+    padding: 1rem 1rem;
+  }
+
+  .dropzone {
+    padding: 1rem;
+  }
+
+  .file-preview {
+    justify-content: flex-start;
+    gap: 0.3rem;
+  }
+
+  .file-card {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .extract-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .question-table th,
+  .question-table td {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.3rem;
+  }
+
+  /* Make inputs and buttons full width for small screens */
+  .question-table input {
+    width: 100% !important;
+  }
+
+  .edit-btn,
+  .save-btn {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+}

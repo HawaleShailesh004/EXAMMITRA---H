@@ -1,0 +1,24 @@
+.login-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    & p {
+        text-align: center;
+        font-size: 1.3rem;
+        animation: blink 0.7s ease 0s infinite ;
+        -webkit-animation: blink 0.7s ease 0s infinite ;
+}
+
+}
+
+@keyframes blink {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

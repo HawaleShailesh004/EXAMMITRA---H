@@ -42,15 +42,22 @@ This project was built as a submission for the **100 Agents Hackathon 2025**, pu
 
 ## Tech Stack & Architecture
 
-- **Frontend:** React.js, React Router, React Markdown, CSS modules  
-- **Backend:** Node.js with Express.js  
-- **Database & Auth:** Appwrite Cloud (Databases, Auth, Functions)  
-- **OCR & Scraping:** Custom Appwrite Functions using OCR.space API and Cheerio for scraping  
-- **AI Integration:** Groq API for LLM-powered answer generation  
+- **Frontend:** React.js, React Router, React Markdown, CSS modules, Puter.ai for client-side OCR  
+- **Backend:** Node.js with Express.js, Puppeteer for web scraping  
+- **Database & Auth:** Appwrite Cloud (Databases, Auth, Storage)  
+- **OCR & Scraping:** OCR performed on client-side using Puter.ai; web scraping done on backend using Puppeteer  
+- **AI Integration:** Groq API for LLM-powered answer generation, Tavily AI integrated for generating web insights related to questions on the answer page  
 - **Deployment:** Planned with Appwrite Cloud deployments (frontend + backend)  
 
-Architecture Overview:  
-User uploads or selects question papers → Backend extracts text and questions → Frontend displays questions → Users generate AI answers and track progress → Data stored securely in Appwrite → Dashboard summarizes user prep.
+## Architecture Overview
+
+1. User uploads question papers or browses available papers.
+2. Frontend extracts text and questions using Backend Puppeteer-based scraping.
+3. Frontend displays extracted questions for the user.
+4. Users generate AI-powered answers via Groq API and view web insights using Tavily AI.
+5. Users track their progress with features like done/revision status.
+6. All data (questions, answers, user info, progress) is stored securely in Appwrite Cloud.
+7. Dashboard provides a summarized view of user preparation and progress.
 
 ---
 
@@ -88,22 +95,22 @@ npm start
 ## Usage
 
 - Register or login with email or Google OAuth.  
-- Upload PDFs of question papers or select from scraped papers.  
-- Extract questions and view AI-generated answers in various formats.  
+- Upload PDFs of question papers or browse & select question papers.  
+- Extract questions and view AI-generated answers in various formats. 
+- Generate Web insights for questions 
 - Mark questions as done or revision needed and track progress.  
 - Navigate dashboard for quick overview of preparation status.  
 
 ## Agentic AI Components
 
-EXAMMITRA incorporates agentic AI elements by autonomously extracting meaningful questions from unstructured PDFs, dynamically generating customized answers via LLMs, and providing intelligent progress tracking — creating an interactive autonomous assistant for exam preparation.
+EXAMMITRA leverages autonomous AI-driven features to enhance exam preparation by extracting relevant questions from unstructured PDF papers, generating tailored answers using large language models (LLMs), and providing intelligent tracking of study progress. This creates a semi-autonomous assistant that helps users focus on important topics and efficiently revise their syllabus.
 
 ## Sponsor Technologies
 
-- **Appwrite Cloud:** For backend services including database, authentication, storage, and serverless functions.  
-- **Tavily Crawl:** Used (planned) for web scraping of question papers.  
-- **Keywords AI:** Integrated for monitoring LLM queries and usage analytics.  
-- **Mem0:** Utilized for advanced memory management in agent interactions.  
-- **Superdev.build:** Leveraged for no-code environment during prototyping phases.  
+- **Appwrite Cloud:** Core backend platform providing databases, authentication, and storage.  
+- **Tavily AI:** Integrated to enrich answers with contextual web insights related to questions on the answer page.
+
+*Note: Although the hackathon sponsors include Keywords AI, Mem0, and Superdev.build, EXAMMITRA currently integrates only Appwrite Cloud and Tavily AI.*
 
 ## Limitations
 

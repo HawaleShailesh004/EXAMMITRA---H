@@ -4,6 +4,9 @@ A smart AI-powered companion to help students ace their exams by providing intel
 
 ---
 
+## 🔗 Live Demo  
+https://exammitra-h.vercel.app/
+
 ## Table of Contents
 
 - [About](#about)  

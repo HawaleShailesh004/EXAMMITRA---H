@@ -12,7 +12,7 @@ const Header = () => {
 
   // Logout handler: deletes all sessions, sets manualLogout flag and resets user context
   const handleLogout = async () => {
-    await account.deleteSessions(); // logs out user from Appwrite
+    await account.deleteSessions("current"); // logs out user from Appwrite
     localStorage.setItem("manualLogout", "true");
     setUser(null);
     navigate("/");

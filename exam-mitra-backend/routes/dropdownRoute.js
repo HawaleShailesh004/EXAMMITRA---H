@@ -1,15 +1,11 @@
 import express from "express";
-import puppeteer from "puppeteer-core";
-import dotenv from "dotenv";
-dotenv.config();
+import chromium from "chrome-aws-lambda";
 
 const router = express.Router();
-const CHROME_PATH = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 // 🧠 Get all papers for a subject
 router.get("/dropdowns/papers", async (req, res) => {
   const { branch, semester, subject } = req.query;
-
   if (!branch || !semester || !subject) {
     return res.status(400).json({ error: "Missing branch, semester, or subject" });
   }
@@ -19,10 +15,10 @@ router.get("/dropdowns/papers", async (req, res) => {
   console.log(`📄 Navigating to: ${url}`);
 
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      executablePath: CHROME_PATH,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    const browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
@@ -91,7 +87,6 @@ router.get("/dropdowns/papers", async (req, res) => {
 // 🔥 Get all subjects for a branch & semester
 router.get("/dropdowns/subjects", async (req, res) => {
   const { branch, semester } = req.query;
-
   if (!branch || !semester) {
     return res.status(400).json({ error: "Branch and semester are required." });
   }
@@ -101,16 +96,14 @@ router.get("/dropdowns/subjects", async (req, res) => {
   console.log(`📚 Getting subjects from: ${url}`);
 
   try {
-    const browser = await puppeteer.launch({
-      headless: "new",
-      executablePath: CHROME_PATH,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    const browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "domcontentloaded" });
-
-    await page.waitForSelector("th.thstyle center.responsivecolspan", { timeout: 30000 });
 
     const subjects = await page.$$eval(
       "th.thstyle center.responsivecolspan",

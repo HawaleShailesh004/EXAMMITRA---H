@@ -3,6 +3,9 @@ import axios from "axios";
 
 const router = express.Router();
 
+import dotenv from "dotenv";
+dotenv.config();
+
 // =======================
 // 🧠 LLM Question Extraction
 // =======================

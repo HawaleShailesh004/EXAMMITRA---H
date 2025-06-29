@@ -1,11 +1,12 @@
 import express from "express";
-import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer";
 
 const router = express.Router();
 
 // 🧠 Get all papers for a subject
 router.get("/dropdowns/papers", async (req, res) => {
   const { branch, semester, subject } = req.query;
+
   if (!branch || !semester || !subject) {
     return res.status(400).json({ error: "Missing branch, semester, or subject" });
   }
@@ -15,10 +16,9 @@ router.get("/dropdowns/papers", async (req, res) => {
   console.log(`📄 Navigating to: ${url}`);
 
   try {
-    const browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     const page = await browser.newPage();
@@ -87,6 +87,7 @@ router.get("/dropdowns/papers", async (req, res) => {
 // 🔥 Get all subjects for a branch & semester
 router.get("/dropdowns/subjects", async (req, res) => {
   const { branch, semester } = req.query;
+
   if (!branch || !semester) {
     return res.status(400).json({ error: "Branch and semester are required." });
   }
@@ -96,10 +97,9 @@ router.get("/dropdowns/subjects", async (req, res) => {
   console.log(`📚 Getting subjects from: ${url}`);
 
   try {
-    const browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     const page = await browser.newPage();

@@ -3,22 +3,19 @@ import { Link, useLocation } from "react-router-dom";
 import { MdSwapVert } from "react-icons/md";
 import { FaFilePdf } from "react-icons/fa";
 import { FiFilter } from "react-icons/fi";
-
-import Header from "./Header";
-import Footer from "./Footer";
-
-import "../CSS/Home.css";
-import "../CSS/QuestionListingPage.css";
-
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import removeMarkdown from "remove-markdown";
+import debounce from "lodash.debounce";
+
+import Header from "./Header";
+import Footer from "./Footer";
+import "../CSS/Home.css";
+import "../CSS/QuestionListingPage.css";
 
 import { databases } from "../Database/appwriteConfig";
 import { useUser } from "../context/userContext";
 import { Query } from "appwrite";
-
-import debounce from "lodash.debounce";
 
 const QuestionListingPage = () => {
   // ------------------ States ------------------
@@ -71,6 +68,7 @@ const QuestionListingPage = () => {
           return;
         }
 
+        // Fetch paper details
         const paper = await databases.getDocument(
           process.env.REACT_APP_APPWRITE_DATABASE_ID,
           process.env.REACT_APP_APPWRITE_PAPERS_COLLECTION_ID,
@@ -83,12 +81,14 @@ const QuestionListingPage = () => {
           paperId: paper.$id,
         });
 
+        // Fetch related questions
         const qRes = await databases.listDocuments(
           process.env.REACT_APP_APPWRITE_DATABASE_ID,
           process.env.REACT_APP_APPWRITE_QUESTIONS_COLLECTION_ID,
           [Query.equal("paperId", paperId)]
         );
 
+        // Format question data
         const transformed = qRes.documents.map((q, index) => ({
           id: q.$id,
           text: q.questionText,
@@ -111,7 +111,7 @@ const QuestionListingPage = () => {
     fetchData();
   }, [user, userLoading, paperId]);
 
-  // ------------------ Filtering ------------------
+  // ------------------ Filtering Function ------------------
   const applyFilter = (questions, filter) => {
     switch (filter) {
       case "revision":
@@ -127,7 +127,7 @@ const QuestionListingPage = () => {
     }
   };
 
-  // ------------------ Sorting ------------------
+  // ------------------ Sorting Function ------------------
   const toggleSort = () => {
     const newSortOrder = !sortOrder;
     setSortOrder(newSortOrder);
@@ -147,7 +147,7 @@ const QuestionListingPage = () => {
     sortQuestions(field, sortOrder);
   };
 
-  // ------------------ Status/Revision Checkbox Toggle ------------------
+  // ------------------ Checkbox State Update ------------------
   const updateQuestionCheckbox = (id, field) => {
     const updatedQuestions = questions.map((q) =>
       q.id === id ? { ...q, [field]: !q[field] } : q
@@ -202,12 +202,15 @@ const QuestionListingPage = () => {
 
   const filteredQuestions = applyFilter(questions, filter);
 
-  // ------------------ Loading/Error States ------------------
+  // ------------------ Loading and Error UI ------------------
   if (loading || userLoading)
     return (
       <>
         <Header />
-        <div className="loading-div">⏳ Loading questions...</div>
+        <div className="loading-spinner">
+          <div className="loader"></div>
+          <p>Loading Questions...</p>
+        </div>
         <Footer />
       </>
     );
@@ -227,11 +230,11 @@ const QuestionListingPage = () => {
       <Header />
       <div className="main-qs-container">
         {/* Subject Title */}
-        <div className="subject-details">
+        <div className="subject-details-qs">
           <h1 className="title">{currentSubject.subject}</h1>
         </div>
 
-        {/* Filters and Sort Controls */}
+        {/* Filter & Sort Controls */}
         <div className="filter-container">
           <span>Questions List</span>
 
@@ -246,7 +249,7 @@ const QuestionListingPage = () => {
             <MdSwapVert />
           </button>
 
-          <button onClick={handleExportPDF} className="sortButton">
+          <button onClick={handleExportPDF} className="sortButton" id="exportBtn">
             <FaFilePdf />
           </button>
 
@@ -267,7 +270,8 @@ const QuestionListingPage = () => {
         </div>
 
         {/* Questions Table */}
-        <div className="question-list-container">
+        {/* Table view (for tablets and desktops) */}
+        <div className="question-table-wrapper">
           <table>
             <thead>
               <tr>
@@ -312,6 +316,51 @@ const QuestionListingPage = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Card view (for mobile) */}
+        <div className="question-cards-wrapper">
+          {filteredQuestions.map((que, i) => (
+            <div className="question-card" key={que.id}>
+              <div id="card-que-text">
+                <strong>{`${i + 1}.`}</strong> {que.text}
+              </div>
+
+              <div id="card-checkbox-container">
+                <span>
+                  <strong>Revision:</strong>{" "}
+                  <input
+                    id="card-checkbox"
+                    type="checkbox"
+                    checked={que.revision}
+                    onChange={() => updateQuestionCheckbox(que.id, "revision")}
+                  />
+                </span>
+                <span>
+                  <strong>Status:</strong>{" "}
+                  <input
+                    type="checkbox"
+                    checked={que.status}
+                    onChange={() => updateQuestionCheckbox(que.id, "status")}
+                  />
+                </span>
+              </div>
+
+              <div id="card-checkbox-container">
+                <span>
+                  <strong>Marks:</strong> {que.marks}
+                </span>
+                <span>
+                  <strong>Frequency:</strong> {que.frequency}
+                </span>
+              </div>
+              <div id="card-ans-text">
+                <Link id="ansbtn" to={`/answer/${que.id}`}>
+                  Answer
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <Footer />

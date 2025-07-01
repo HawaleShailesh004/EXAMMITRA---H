@@ -33,6 +33,7 @@ const OauthSuccess = () => {
   return (
     <>
       <div className="login-loading">
+        <div class="loader"></div>
         <p>Logging you in, please wait...</p>
       </div>
     </>

@@ -119,6 +119,7 @@
 
 /* QPs table section */
 .qps-table-section {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -276,6 +277,22 @@
     grid-template-columns: 1fr;
   }
 
+  #button-td{
+    display: flex;
+    border: none;
+
+
+    & .qp-table-btn{
+      font-size: 0.6rem;
+      padding: 0.6rem;
+    }
+  }
+
+
+  .qps-table-section{
+    padding: 0.6rem;
+  }
+
   .selection-form .dropdown {
     margin-bottom: 1rem;
   }
@@ -332,5 +349,34 @@
   .qp-table th,
   .qp-table td {
     padding: 0.5rem;
+  }
+}
+
+
+.loader {
+  margin: 1rem auto;
+  grid-column: span 2;
+  width: 60px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side, var(--color-text-primary) 90%, #0000);
+  background:
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 100%;
+  animation: l7 1s infinite linear;
+}
+
+@keyframes l7 {
+  33% {
+    background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+  }
+
+  50% {
+    background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+  }
+
+  66% {
+    background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
   }
 }

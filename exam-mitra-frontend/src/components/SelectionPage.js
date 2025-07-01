@@ -18,6 +18,8 @@ const SelectionPage = () => {
   const [loading, setLoading] = useState(false); // For subject loading
   const [qpLoading, setQpLoading] = useState(false); // For question papers loading
   const [error, setError] = useState("");
+  const [progressText, setProgressText] = useState("");
+  const [extloading, setExtLoading] = useState(false);
   const [qps, setQps] = useState([]); // Question papers fetched
   const [selectedQps, setSelectedQps] = useState([]); // User-selected QPs URLs
 
@@ -137,19 +139,22 @@ const SelectionPage = () => {
     }
 
     try {
-      setQpLoading(true);
-      setError("");
+      setProgressText("");
+      setExtLoading(true);
       let mergedText = "";
 
       for (let i = 0; i < urls.length; i++) {
-        setError(`Processing paper ${i + 1} of ${urls.length}...`);
-        const text = await extractTextFromPdfUrlUsingOCR(urls[i], setError);
+        setProgressText(`Processing paper ${i + 1} of ${urls.length}...`);
+        const text = await extractTextFromPdfUrlUsingOCR(
+          urls[i],
+          setProgressText
+        );
         mergedText += text + "\n\n";
       }
 
       // Post extracted text to backend for question extraction
       const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}//extract-text`,
+        `${process.env.REACT_APP_API_BASE_URL}/extract-text`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -178,9 +183,10 @@ const SelectionPage = () => {
       navigate("/upload");
     } catch (err) {
       console.error("OCR Extract failed:", err);
-      setError("Failed to extract questions.");
+      setProgressText("Failed to extract questions.");
     } finally {
       setQpLoading(false);
+      setExtLoading(false);
     }
   }
 
@@ -253,6 +259,10 @@ const SelectionPage = () => {
             </div>
 
             {/* Fetch QPs Button */}
+        
+       
+        
+
             <button
               className="continue-btn"
               disabled={!subject || qpLoading}
@@ -291,7 +301,7 @@ const SelectionPage = () => {
                       <tr key={idx} className="fadeInRow">
                         <td>{year}</td>
                         <td>{month}</td>
-                        <td>
+                        <td id="button-td">
                           {/* Toggle select/deselect QP */}
                           <button
                             className={`qp-table-btn ${
@@ -335,10 +345,15 @@ const SelectionPage = () => {
                       className="extract-btn"
                       onClick={() => handleExtractFromUrls(selectedQps)}
                       type="button"
-                      disabled={qpLoading}
                     >
-                      Extract Questions
+                      {!extloading ? "Extract Questions" : "Extracting.."}
                     </button>
+                        {extloading && <div class="loader"></div>}
+                    {progressText && (
+                      <p className="progressText-text error-text">
+                        Processing Selected PDFs & Extracting Question..
+                      </p>
+                    )}
                   </div>
                 )}
               </div>

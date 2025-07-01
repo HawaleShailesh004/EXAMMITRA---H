@@ -289,6 +289,7 @@ const Upload = () => {
       setStatus("❌ Failed to extract. See console.");
     } finally {
       setLoading(false);
+      localStorage.removeItem("uploadSource");
     }
   };
 
@@ -333,27 +334,104 @@ const Upload = () => {
                 )}
               </div>
 
-              <table className="question-table">
-                <thead>
-                  <tr>
-                    <th>Sr No.</th>
-                    <th>Question</th>
-                    <th>Marks</th>
-                    <th>Frequency</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {questions.map((q, i) => (
-                    <EditableRow
-                      key={i}
-                      index={i}
-                      question={q}
-                      onUpdate={handleQuestionUpdate}
-                    />
-                  ))}
-                </tbody>
-              </table>
+              {/* Table view (desktop/tablet) */}
+              <div className="question-table-wrapper">
+                <table className="question-table">
+                  <thead>
+                    <tr>
+                      <th>Sr No.</th>
+                      <th>Question</th>
+                      <th>Marks</th>
+                      <th>Frequency</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {questions.map((q, i) => (
+                      <EditableRow
+                        key={i}
+                        index={i}
+                        question={q}
+                        onUpdate={handleQuestionUpdate}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Card view (mobile) */}
+              <div className="question-cards-wrapper">
+                {questions.map((q, i) => (
+                  <div key={i} className="question-card">
+                    {q.isEditing ? (
+                      <textarea
+                        className="card-que-text"
+                        value={q.text}
+                        onChange={(e) =>
+                          handleQuestionUpdate(i, {
+                            ...q,
+                            text: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      <p className="card-que-text"><strong>{i+1}. </strong>{q.text}`</p>
+                    )}
+
+                    <div className="card-checkbox-container">
+                      <label>
+                        <strong>Marks:</strong>
+                        <input
+                          type="number"
+                          value={q.marks}
+                          onChange={(e) =>
+                            handleQuestionUpdate(i, {
+                              ...q,
+                              marks: parseInt(e.target.value),
+                            })
+                          }
+                     
+                          disabled={!q.isEditing}
+                        />
+                      </label>
+                      <label>
+                        <strong>Frequency:</strong>
+                        <input
+                          type="number"
+                          value={q.frequency}
+                          onChange={(e) =>
+                            handleQuestionUpdate(i, {
+                              ...q,
+                              frequency: parseInt(e.target.value),
+                            })
+                          }
+                       
+                          disabled={!q.isEditing}
+                        />
+                      </label>
+                    </div>
+
+                    <div className="card-action-container">
+                      <button
+                        className={
+                          q.isEditing ? "card-save-btn" : "card-edit-btn"
+                        } id="edit-save-btn"
+                        onClick={() => {
+                          if (q.isEditing) {
+                            // Save changes
+                            handleQuestionUpdate(i, { ...q, isEditing: false });
+                          } else {
+                            // Start editing
+                            handleQuestionUpdate(i, { ...q, isEditing: true });
+                          }
+                        }}
+                      >
+                        {q.isEditing ? "Save" : "Edit"}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
               <button
                 type="button"
@@ -394,12 +472,12 @@ const Upload = () => {
 
               {loading && (
                 <div className="loading-spinner">
-                  <div className="spinner"></div>
+                  <div className="loader"></div>
                   <p>Processing PDF and extracting questions...</p>
                 </div>
               )}
 
-              {status && <p className="status-text">{status}</p>}
+              {/* {status && <p className="status-text">{status}</p>} */}
             </>
           )}
         </div>

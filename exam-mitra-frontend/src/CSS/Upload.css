@@ -1,26 +1,23 @@
-/* Main container padding to clear fixed header */
+/* ================= Base Layout ================= */
 .main-container {
   padding-top: 8rem;
   margin-bottom: 2rem;
-  display: block;
 }
 
-/* Upload content container */
 .upload-container {
   padding: 2rem 10rem;
-  color: #2e7d32;
   text-align: center;
+  color: #2e7d32;
   box-sizing: border-box;
 }
 
-/* Info text below title */
 .format-info {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: #4caf50;
 }
 
-/* Dropzone style */
+/* Dropzone Styling */
 .dropzone {
   padding: 2rem;
   border: 2px dashed #81c784;
@@ -32,10 +29,10 @@
 }
 
 .dropzone:hover {
-  background: #e8f5e9;
+  background-color: #e8f5e9;
 }
 
-/* File preview container */
+/* File Preview */
 .file-preview {
   display: flex;
   flex-wrap: wrap;
@@ -44,62 +41,49 @@
   margin-bottom: 1.5rem;
 }
 
-/* Each file card */
 .file-card {
-  padding: 0.5rem 1rem;
   background: #e8f5e9;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   border: 1px solid #c8e6c9;
   border-radius: 5px;
-  font-size: 0.9rem;
 }
 
-/* Extract questions button */
+/* Button Styles */
 .extract-btn {
   background: linear-gradient(135deg, #002f00, #006016);
   color: white;
   padding: 0.75rem 2rem;
   border-radius: 5px;
-  margin-bottom: 2rem;
   font-size: 1rem;
-  cursor: pointer;
   border: none;
-  box-shadow:
-    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  cursor: pointer;
+  margin-bottom: 2rem;
   transition: all 0.2s ease;
 }
 
 .extract-btn:hover {
-  opacity: 0.8;
-  scale: 1.02;
+  opacity: 0.85;
+  transform: scale(1.02);
 }
 
-/* Question table styles */
+/* Table Styling */
 .question-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1.3rem;
-  margin-bottom: 2rem;
+  margin: 1.5rem 0 2rem;
 }
 
 .question-table th,
 .question-table td {
-  border: 1px solid #ccc;
-  padding: 1rem 0.8rem;
   text-align: left;
+  padding: 0.8rem;
   font-size: 1rem;
-  color: var(--color-text-primary);
 }
 
-.question-table th {
-  background-color: #a5d6a7;
-  color: #1b5e20;
-}
-
-/* Edit & Save buttons in question table */
 .edit-btn,
 .save-btn {
-  padding: 5px 10px;
+  padding: 6px 12px;
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -108,29 +92,29 @@
 
 .edit-btn {
   background: linear-gradient(135deg, #002f00, #006016);
-  box-shadow:
-    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .save-btn {
-  background-color: #007bff;
+  background: #007bff;
 }
 
-/* Loading spinner container */
+.card-action-container #edit-save-btn {
+  padding: 0.5rem 1rem;
+  margin-top: -1rem;
+}
+
+/* Loading Spinner */
 .loading-spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
 }
 
-/* Spinner animation */
 .spinner {
   width: 40px;
   height: 40px;
-  border: 5px solid var(--light-gray);
-  border-top: 5px solid var(--primary-color);
+  border: 5px solid #ddd;
+  border-top: 5px solid #006016;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -141,71 +125,179 @@
   }
 }
 
-/* Status text below upload area */
-.status-text {
-  margin-top: 1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
+/* ================= Card View (Mobile) ================= */
+.question-cards-wrapper {
+  display: none;
+  margin-top: 2rem;
+  margin-left: -1rem;
 }
 
-/* Responsive Styles */
+.question-card {
+  background-color: #f0fdf4;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid #c8e6c9;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
 
-/* Tablets and below */
+.card-que-text {
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+textarea.card-que-text {
+  width: 100%;
+  border: 1px solid #c8e6c9;
+  border-radius: 6px;
+  padding: 0.6rem;
+  font-size: 0.8rem;
+  resize: vertical;
+  min-height: 80px;
+  background: #fff;
+  color: #333;
+  box-sizing: border-box;
+  margin-bottom: 0.7rem;
+}
+
+.editing-ip{
+  width: 15%;
+  text-align: left;
+}
+
+.non-editing-ip{
+  width: 10%;
+}
+
+.card-checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  gap: 1rem;
+}
+
+.card-checkbox-container label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-action-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: start;
+}
+
+.card-edit-btn,
+.card-save-btn {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.card-edit-btn {
+  background: linear-gradient(135deg, #002f00, #006016);
+}
+
+.card-save-btn {
+  background: #007bff;
+}
+
+/* ================= Responsive Enhancements ================= */
+
+/* Tablets */
 @media (max-width: 768px) {
   .upload-container {
-    padding: 2rem 3rem;
+    padding: 2rem 2rem;
+    margin-top: 2rem;
+  }
+
+  .question-table-wrapper {
+    display: none;
+  }
+
+  .question-cards-wrapper {
+    display: block;
+    padding: 1rem 0.7rem;
   }
 
   .extract-btn {
     width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
   }
 
-  .question-table th,
-  .question-table td {
-    font-size: 0.9rem;
-    padding: 0.8rem 0.5rem;
+  .file-card {
+    font-size: 0.85rem;
+  }
+
+  .card-que-text {
+    font-size: 0.95rem;
+  }
+
+  .card-checkbox-container,
+  .card-action-container {
+    font-size: 0.85rem;
   }
 }
 
-/* Small mobiles */
+/* Small Phones */
 @media (max-width: 480px) {
   .upload-container {
-    padding: 1rem 1rem;
+    padding: 1.2rem 1rem;
   }
 
   .dropzone {
     padding: 1rem;
   }
 
-  .file-preview {
-    justify-content: flex-start;
-    gap: 0.3rem;
-  }
-
   .file-card {
-    font-size: 0.85rem;
-    padding: 0.3rem 0.7rem;
-  }
-
-  .extract-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
   }
 
   .question-table th,
   .question-table td {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.3rem;
-  }
-
-  /* Make inputs and buttons full width for small screens */
-  .question-table input {
-    width: 100% !important;
+    font-size: 0.8rem;
+    padding: 0.5rem;
   }
 
   .edit-btn,
-  .save-btn {
-    padding: 4px 8px;
-    font-size: 0.85rem;
+  .save-btn,
+  .card-edit-btn,
+  .card-save-btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .extract-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .card-que-text {
+    font-size: 0.7rem;
+  }
+
+  .card-checkbox-container,
+  .card-action-container {
+    font-size: 0.8rem;
+
+
+    & input {
+      width: 10%;
+      border: none;
+    }
+  }
+
+  .card-checkbox-container {
+    margin-top: -0.7rem;
   }
 }

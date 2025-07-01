@@ -91,7 +91,6 @@
 
 .stat-card {
   flex: 1;
-  min-width: 200px;
   /* background: var(--color-surface); */
   color: var(--color-text-primary);
   padding: 1.5rem;
@@ -470,7 +469,11 @@
 /* ========= Responsive ========= */
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 3rem 1.5rem;
+    padding: 3rem 1rem;
+  }
+
+  .dashboard-bonus{
+        padding: 2rem 0.5rem;
   }
 
   .subject-grid {
@@ -519,6 +522,20 @@
   max-height: 90vh;
 }
 
+.rev-question {
+
+  font-size: 0.6rem;
+  line-height: 1.8;
+}
+
+.rev-btn {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  padding: 0.5rem 0.5rem;
+  margin-left: 1rem;
+}
+
+
 .edit-title-input {
   font-size: 1.2rem;
   width: 100%;
@@ -543,4 +560,92 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+
+  .dashboard-container{
+    margin-top: 7rem;
+  }
+  .dashboard-heading {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .stats-summary {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .stat-card {
+    width: 90%;
+    max-width: 300px;
+    padding: 1rem;
+
+    & h3 , p{
+      font-size: 0.7rem;
+    }
+  }
+
+  .btn-container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .continue-btn,
+  #delete-btn {
+    width: 100%;
+    margin: 0.3rem 0 0;
+  }
+
+  .start-new-btn {
+    width: 100%;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .info-text{
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    margin-top: 7rem;
+  }
+
+  .subject-card h2 {
+    font-size: 1rem;
+    height: auto;
+  }
+
+  .progress-label,
+  .card-metric {
+    font-size: 0.85rem;
+  }
+
+
+
+  .toggle-revision-btn {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .edit-title-input {
+    font-size: 1rem;
+  }
+
+  .modal-btns {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
 }

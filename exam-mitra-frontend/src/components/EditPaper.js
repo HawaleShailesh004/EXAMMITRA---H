@@ -157,74 +157,77 @@ const EditPaper = () => {
         </div>
 
         <div className="filter-container">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            style={{ fontSize: "1.2rem", padding: "0.5rem", width: "30%" }}
-          />
-          <button id="ansbtn" onClick={handleSave}>
+          <input value={title} onChange={(e) => setTitle(e.target.value)} />
+          <button
+            id="edit-paper-save-btn"
+            className="edit-btn"
+            onClick={handleSave}
+          >
             Save Changes
           </button>
-          <button id="ansbtn" onClick={saveNewQuestions}>
+          <button className="edit-btn" onClick={saveNewQuestions}>
             Save New
           </button>
-          <button id="ansbtn" onClick={addQuestion}>
+          <button className="edit-btn" onClick={addQuestion}>
             Add Question
           </button>
         </div>
-
-        <div className="question-list-container">
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Question</th>
-                <th>Marks</th>
-                <th>Frequency</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {questions.map((q, i) => (
-                <tr key={q.$id}>
-                  <td className="que-no">{i + 1}</td>
-                  <td className="que-text">
-                    <input
-                      style={{ width: "100%" }}
-                      value={q.questionText}
-                      onChange={(e) =>
-                        handleChange(i, "questionText", e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={q.marks}
-                      onChange={(e) => handleChange(i, "marks", e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={q.frequency}
-                      onChange={(e) =>
-                        handleChange(i, "frequency", e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className="delete-question"
-                      onClick={() => deleteQuestion(q.$id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <div className="edit-paper-question-table">
+          <div className="question-list-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Question</th>
+                  <th>Marks</th>
+                  <th>Frequency</th>
+                  <th>Delete</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {questions.map((q, i) => (
+                  <tr key={q.$id}>
+                    <td className="que-no">{i + 1}</td>
+                    <td className="que-text">
+                      <input
+                        type="text"
+                        value={q.questionText}
+                        onChange={(e) =>
+                          handleChange(i, "questionText", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={q.marks}
+                        onChange={(e) =>
+                          handleChange(i, "marks", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={q.frequency}
+                        onChange={(e) =>
+                          handleChange(i, "frequency", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="delete-question"
+                        onClick={() => deleteQuestion(q.$id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <Footer />

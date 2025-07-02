@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard";
 import EditPaper from "./components/EditPaper";
 import NotFoundPage from "./components/NotFoundPage";
 import FAQPage from "./components/FAQPage";
+import ContactPage from "./components/ContactPage";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/oauth-success" element={<OauthSuccess />} />
           
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

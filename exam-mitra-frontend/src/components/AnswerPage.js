@@ -5,7 +5,7 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { marked } from "marked";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "../CSS/Home.css";
 import "../CSS/AnswerPage.css";
@@ -18,6 +18,7 @@ import { useUser } from "../context/userContext";
 const AnswerPage = () => {
   const { id } = useParams();
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const [questionData, setQuestionData] = useState(null);
   const [answer, setAnswer] = useState("");
@@ -31,6 +32,8 @@ const AnswerPage = () => {
 
   const [insightData, setInsightData] = useState(null);
   const [insightLoading, setInsightLoading] = useState(false);
+
+  const [paperId, setPaperId] = useState(null);
 
   const handleInsightsFetch = async () => {
     if (!questionData?.questionText) return;
@@ -92,6 +95,7 @@ const AnswerPage = () => {
           id
         );
         setQuestionData(res);
+        setPaperId(res.paperId);
         const allAnswers = JSON.parse(res.answers || "[]");
         const match = allAnswers.find((a) => a.ansType === selectedType);
         if (match) {
@@ -229,7 +233,12 @@ const AnswerPage = () => {
       <div className="mainContainer">
         <div className="subjectContainer">
           <h2 className="subjectTitle">Answer Page</h2>
-          <a href="/questions">⬅ Go To Questions</a>
+          <button
+            className="goBackBtn"
+            onClick={() => navigate(`/questions?paperId=${paperId}`)}
+          >
+            ⬅ Go To Questions
+          </button>
         </div>
         <div className="answerContainer">
           <div className="questionTitleContainer">

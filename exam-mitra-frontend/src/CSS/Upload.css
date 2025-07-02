@@ -9,6 +9,7 @@
   text-align: center;
   color: #2e7d32;
   box-sizing: border-box;
+ animation: fadeIn 0.6s ease-in-out;
 }
 
 .format-info {

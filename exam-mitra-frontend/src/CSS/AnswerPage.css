@@ -202,6 +202,23 @@
   right: 5.5rem;
 }
 
+.goBackBtn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  -webkit-tap-highlight-color: transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-bottom: 1rem;
+}
+
+.goBackBtn:hover {
+  color: var(--color-primary-light);
+}
+
+
 .answer {
   margin-top: 20px;
   max-height: 400px;
@@ -404,7 +421,7 @@ li {
     margin-top: 6rem;
   }
 
-  .loaderText{
+  .loaderText {
     font-size: 0.8rem;
   }
 
@@ -486,7 +503,7 @@ li {
     font-size: 0.95rem;
   }
 
-  .insightBlock p{
+  .insightBlock p {
     font-size: 0.6rem;
   }
 
@@ -498,7 +515,9 @@ li {
 
 /* 3. Very small screens (optional) */
 @media (max-width: 480px) {
-  .generateButton, .insightsFetchBtn {
+
+  .generateButton,
+  .insightsFetchBtn {
     font-size: 0.75rem;
     padding: 0.6rem 1rem;
   }

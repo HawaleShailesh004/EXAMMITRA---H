@@ -102,11 +102,15 @@ const LoginSignup = () => {
             {isLogin ? "Sign Up" : "Login"}
           </span>
         </p>
-        <a
-          style={{color: "var(--color-text-primary)" }}
-          href="/"
-        >
-          <p style={{ marginTop: "-1rem" }}>Skip for Now</p>
+        <a style={{ color: "var(--color-text-primary)", WebkitTapHighlightColor: "transparent"}} href="/">
+          <p
+            style={{
+              marginTop: "-1rem",
+              
+            }}
+          >
+            Skip for Now
+          </p>
         </a>
       </form>
     </div>

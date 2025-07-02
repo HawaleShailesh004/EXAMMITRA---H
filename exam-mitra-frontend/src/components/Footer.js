@@ -4,23 +4,28 @@ import "../CSS/Footer.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      {/* Footer Navigation Links */}
-      <div className="footer-links">
-        <a href="/">Home</a>
-        <a href="/">Features</a>
-        <a href="/">How It Works</a>
-        <a href="/">Contact</a>
-        <a href="/">Terms of Service</a>
-        <a href="/">Privacy Policy</a>
+      <div className="footer-container">
+
+        {/* Section: Explore */}
+        <div className="footer-column">
+          <h4>Explore</h4>
+          <a href="/">Home</a>
+          <a href="/upload">Upload</a>
+          <a href="/selection">Browse</a>
+        </div>
+
+        <div className="footer-divider-vertical"></div>
+
+        {/* Section: Help */}
+        <div className="footer-column">
+          <h4>Help</h4>
+          <a href="/faq">FAQs</a>
+          <a href="/">Contact</a>
+        </div>
+
       </div>
 
-      {/* Social Media Links */}
-      <div className="social-links">
-        <a href="/">LinkedIn</a>
-        <a href="/">Instagram</a>
-      </div>
-
-      {/* Copyright Text */}
+      <hr className="footer-divider" />
       <p className="footer-text">© 2025 ExamMitra. All rights reserved.</p>
     </footer>
   );

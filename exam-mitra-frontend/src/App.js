@@ -14,6 +14,7 @@ import { UserProvider } from "./context/userContext";
 import Dashboard from "./components/Dashboard";
 import EditPaper from "./components/EditPaper";
 import NotFoundPage from "./components/NotFoundPage";
+import FAQPage from "./components/FAQPage";
 
 const App = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => {
 
           <Route path="/answer/:id" element={<AnswerPage />} />
           <Route path="/oauth-success" element={<OauthSuccess />} />
+          
+          <Route path="/faq" element={<FAQPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

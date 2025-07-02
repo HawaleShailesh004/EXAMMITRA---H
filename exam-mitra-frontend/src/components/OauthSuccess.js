@@ -20,7 +20,7 @@ const OauthSuccess = () => {
 
         const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
 
-        navigate(redirectPath);
+        navigate("/dashboard");
       } catch (err) {
         console.error("OAuth login failed", err);
         navigate("/login");

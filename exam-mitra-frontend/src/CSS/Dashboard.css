@@ -472,8 +472,8 @@
     padding: 3rem 1rem;
   }
 
-  .dashboard-bonus{
-        padding: 2rem 0.5rem;
+  .dashboard-bonus {
+    padding: 2rem 0.5rem;
   }
 
   .subject-grid {
@@ -564,9 +564,10 @@
 
 @media (max-width: 768px) {
 
-  .dashboard-container{
+  .dashboard-container {
     margin-top: 7rem;
   }
+
   .dashboard-heading {
     font-size: 1rem;
     text-align: center;
@@ -582,7 +583,8 @@
     max-width: 300px;
     padding: 1rem;
 
-    & h3 , p{
+    & h3,
+    p {
       font-size: 0.7rem;
     }
   }
@@ -608,7 +610,7 @@
     font-size: 1rem;
   }
 
-  .info-text{
+  .info-text {
     font-size: 0.6rem;
   }
 }
@@ -648,4 +650,45 @@
     flex-direction: column;
     gap: 0.6rem;
   }
+
+  .not-logged-in-container {
+    margin-top: 5rem;
+  }
+}
+
+.not-logged-in-container {
+  padding: 8rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeSlideIn 0.5s ease-out forwards;
+}
+
+.not-logged-in-container h2 {
+  font-size: 2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.not-logged-in-container p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.login-redirect-btn {
+  background-color: var(--color-text-primary);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-redirect-btn:hover {
+  opacity: 0.85;
 }

@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showRevision, setShowRevision] = useState(false);
   const [editPaperId, setEditPaperId] = useState(null);
+
   const navigate = useNavigate();
 
   const toggleRevision = () => setShowRevision((prev) => !prev);
@@ -32,13 +33,13 @@ const Dashboard = () => {
       if (wasLoggedOut) {
         localStorage.removeItem("manualLogout");
         navigate("/login?redirect=/dashboard");
-      } else {
-        const confirmLogin = window.confirm(
-          "🔐 You need to be logged in to view Dashboard. Do you want to login now?"
-        );
-        if (confirmLogin) {
-          navigate("/login?redirect=/dashboard");
-        }
+      // } else {
+      //   const confirmLogin = window.confirm(
+      //     "🔐 You need to be logged in to view Dashboard. Do you want to login now?"
+      //   );
+      //   if (confirmLogin) {
+      //     navigate("/login");
+      //   } 
       }
     }
   }, [user, userLoading, navigate]);
@@ -138,9 +139,23 @@ const Dashboard = () => {
 
   if (userLoading)
     return <div className="loading">⏳ Checking user session...</div>;
-
-  if (!user)
-    return <div className="loading">❌ Not Logged In. Redirecting...</div>;
+  if (!user && !userLoading)
+    return (
+      <div className="not-logged-in-page">
+        <Header />
+        <div className="not-logged-in-container">
+          <h2>🔐 You are not logged in</h2>
+          <p>To access your dashboard, please log in to your account.</p>
+          <button
+            onClick={() => navigate("/login")}
+            className="login-redirect-btn"
+          >
+            🔑 Go to Login
+          </button>
+        </div>
+        <Footer />
+      </div>
+    );
 
   return (
     <>

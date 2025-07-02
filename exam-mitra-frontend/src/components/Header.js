@@ -1,66 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import "../CSS/Header.css";
-import "../CSS/Home.css";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { account } from "../Database/appwriteConfig";
 import { useUser } from "../context/userContext";
 
 const Header = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Logout handler: deletes all sessions, sets manualLogout flag and resets user context
   const handleLogout = async () => {
-    await account.deleteSessions("current"); // logs out user from Appwrite
+    await account.deleteSessions("current");
     localStorage.setItem("manualLogout", "true");
     setUser(null);
     navigate("/");
   };
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
     <nav className="navbar">
-      {/* Logo Image */}
       <img src="/images/final logo.jpg" alt="Logo" className="logo" />
 
-      {/* Navigation Links */}
-      <ul className="nav-links">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/upload">Upload New</Link>
-        </li>
-        {/* Show Dashboard link only if user is logged in */}
-        {user && (
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        )}
-      </ul>
+      {/* Hamburger Icon */}
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
+      </div>
 
-      {/* Login/Logout Buttons */}
-      <div className="nav-buttons">
-        {user ? (
-          <>
-            <span className="username">👤 {user.name}</span>
-            <button className="btn-secondary" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              className="btn-secondary"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </button>
-            <button className="btn-primary" onClick={() => navigate("/login")}>
-              Sign Up
-            </button>
-          </>
-        )}
+      {/* Menu Content */}
+      <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
+        <ul className="nav-links">
+          <li onClick={() => setMenuOpen(false)}>
+            <Link to="/">Home</Link>
+          </li>
+          <li onClick={() => setMenuOpen(false)}>
+            <Link to="/upload">Upload New</Link>
+          </li>
+          {user && (
+            <li onClick={() => setMenuOpen(false)}>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+          )}
+        </ul>
+
+        <div className="nav-buttons">
+          {user ? (
+            <>
+              <span className="username">👤 {user.name}</span>
+              <button className="btn-secondary" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="btn-secondary"
+                onClick={() => {
+                  navigate("/login");
+                  setMenuOpen(false);
+                }}
+              >
+                Login
+              </button>
+              <button
+                className="btn-primary"
+                onClick={() => {
+                  navigate("/login");
+                  setMenuOpen(false);
+                }}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

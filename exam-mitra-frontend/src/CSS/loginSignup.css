@@ -1,11 +1,9 @@
-
 .login-container {
   display: flex;
   height: 100vh;
   align-items: center;
   justify-content: center;
   background: #f9f9f9;
-  font-family: ;
 }
 
 .login-form {
@@ -85,6 +83,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -109,4 +108,77 @@
 
 .google-btn:hover {
   background-color: #eee;
+}
+
+@media (max-width: 768px) {
+  .login-form {
+    width: 90%;
+    padding: 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .login-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-form input {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .login-form button {
+    font-size: 1rem;
+    padding: 0.8rem 2rem;
+  }
+
+  .google-btn {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    width: 75%;
+    padding: 1rem;
+    gap: 0.7rem;
+    margin: 0 auto;
+  }
+
+  .login-form h2 {
+    font-size: 1rem;
+  }
+
+  .login-form input {
+    padding: 0.6rem;
+    font-size: 0.7rem;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .login-form button {
+    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
+     width: 80%;
+    margin: 0 auto;
+  }
+
+  .google-btn {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .toggle-link {
+    font-size: 0.6rem;
+    text-align: center;
+  }
+
+  .login-form p{
+       font-size: 0.6rem;
+    text-align: center;
+  }
+
+  .error-msg {
+    font-size: 0.8rem;
+  }
 }

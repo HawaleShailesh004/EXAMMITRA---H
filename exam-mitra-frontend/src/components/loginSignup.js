@@ -6,7 +6,6 @@ import { FcGoogle } from "react-icons/fc";
 
 import { useUser } from "../context/userContext";
 
-
 const LoginSignup = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
@@ -44,17 +43,16 @@ const LoginSignup = () => {
     }
   };
 
-const handleGoogleAuth = () => {
-  // Save the original redirect path before starting OAuth
-  localStorage.setItem("redirectAfterLogin", redirectPath);
+  const handleGoogleAuth = () => {
+    // Save the original redirect path before starting OAuth
+    localStorage.setItem("redirectAfterLogin", redirectPath);
 
-  account.createOAuth2Session(
-    "google",
-    window.location.origin + "/oauth-success",  // We'll handle it here
-    window.location.origin + "/login"
-  );
-};
-
+    account.createOAuth2Session(
+      "google",
+      window.location.origin + "/oauth-success", // We'll handle it here
+      window.location.origin + "/login"
+    );
+  };
 
   return (
     <div className="login-container">
@@ -104,6 +102,12 @@ const handleGoogleAuth = () => {
             {isLogin ? "Sign Up" : "Login"}
           </span>
         </p>
+        <a
+          style={{color: "var(--color-text-primary)" }}
+          href="/"
+        >
+          <p style={{ marginTop: "-1rem" }}>Skip for Now</p>
+        </a>
       </form>
     </div>
   );

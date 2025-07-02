@@ -13,6 +13,7 @@ import OauthSuccess from "./components/OauthSuccess";
 import { UserProvider } from "./context/userContext";
 import Dashboard from "./components/Dashboard";
 import EditPaper from "./components/EditPaper";
+import NotFoundPage from "./components/NotFoundPage";
 
 const App = () => {
   return (
@@ -32,6 +33,8 @@ const App = () => {
 
           <Route path="/answer/:id" element={<AnswerPage />} />
           <Route path="/oauth-success" element={<OauthSuccess />} />
+
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

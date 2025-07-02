@@ -7,7 +7,9 @@ import { useUser } from "../context/userContext";
 const Header = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleLogout = async () => {
     await account.deleteSessions("current");
@@ -17,7 +19,15 @@ const Header = () => {
   };
 
   const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
+    if (menuOpen) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setMenuOpen(false);
+        setIsClosing(false);
+      }, 300); // match CSS animation duration
+    } else {
+      setMenuOpen(true);
+    }
   };
 
   return (
@@ -25,21 +35,33 @@ const Header = () => {
       <img src="/images/final logo.jpg" alt="Logo" className="logo" />
 
       {/* Hamburger Icon */}
-      <div className="hamburger" onClick={toggleMenu}>
-        ☰
+      <div
+        className={`hamburger ${menuOpen ? "hamburger-open" : ""}`}
+        onClick={toggleMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
 
-      {/* Menu Content */}
-      <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
+      {/* Slide Menu with animation class */}
+      <div
+        className={`nav-menu ${
+          menuOpen ? (isClosing ? "closing" : "open") : ""
+        }`}
+      >
         <ul className="nav-links">
-          <li onClick={() => setMenuOpen(false)}>
+          <li onClick={toggleMenu}>
             <Link to="/">Home</Link>
           </li>
-          <li onClick={() => setMenuOpen(false)}>
-            <Link to="/upload">Upload New</Link>
+          <li onClick={toggleMenu}>
+            <Link to="/upload">Upload</Link>
+          </li>
+          <li onClick={toggleMenu}>
+            <Link to="/selection">Browse</Link>
           </li>
           {user && (
-            <li onClick={() => setMenuOpen(false)}>
+            <li onClick={toggleMenu}>
               <Link to="/dashboard">Dashboard</Link>
             </li>
           )}
@@ -59,7 +81,7 @@ const Header = () => {
                 className="btn-secondary"
                 onClick={() => {
                   navigate("/login");
-                  setMenuOpen(false);
+                  toggleMenu();
                 }}
               >
                 Login
@@ -68,7 +90,7 @@ const Header = () => {
                 className="btn-primary"
                 onClick={() => {
                   navigate("/login");
-                  setMenuOpen(false);
+                  toggleMenu();
                 }}
               >
                 Sign Up

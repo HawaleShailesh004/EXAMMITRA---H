@@ -16,6 +16,7 @@ import EditPaper from "./components/EditPaper";
 import NotFoundPage from "./components/NotFoundPage";
 import FAQPage from "./components/FAQPage";
 import ContactPage from "./components/ContactPage";
+import PDFExport from "./components/PDFExport";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
           
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/pdf" element={<PDFExport />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

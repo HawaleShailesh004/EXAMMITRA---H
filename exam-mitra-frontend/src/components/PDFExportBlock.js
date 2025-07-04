@@ -7,7 +7,10 @@ const PDFExportBlock = forwardRef(({ subjectName, questions }, ref) => {
   useEffect(() => {
     console.log("📄 Rendering PDFExportBlock...");
     console.log("📚 Subject:", subjectName);
-    console.log("📋 Questions received:", questions ? questions.length : "No Q");
+    console.log(
+      "📋 Questions received:",
+      questions ? questions.length : "No Q"
+    );
   }, [subjectName, questions]);
 
   const qaContent = questions
@@ -21,8 +24,6 @@ const PDFExportBlock = forwardRef(({ subjectName, questions }, ref) => {
             .map((block) => {
               const label = "Answer";
               const value = block.value?.trim() || "";
-
-              
 
               return `\n${value}`;
             })
@@ -54,18 +55,7 @@ ${qaContent}
 `;
 
   return (
-    <div
-      ref={ref}
-      className="pdf-wrapper"
-      style={{
-        position: "absolute",
-        left: "-9999px",
-        top: 0,
-        width: "210mm",
-        padding: "20px",
-        zIndex: -1,
-      }}
-    >
+    <div ref={ref} className="pdf-wrapper">
       <div className="pdf-markdown">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {fullMarkdown}

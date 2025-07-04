@@ -148,7 +148,7 @@ const QuestionListingPage = () => {
     setTimeout(() => {
       html2pdf()
         .set({
-          margin: 15,
+          margin: 20,
           filename: `${currentSubject.subject}_Questions.pdf`,
           html2canvas: { scale: 2 },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
@@ -163,7 +163,7 @@ const QuestionListingPage = () => {
 
             for (let i = 1; i <= totalPages; i++) {
               pdf.setPage(i);
-              pdf.setFontSize(10);
+              pdf.setFontSize(12);
               pdf.text(`Page ${i} of ${totalPages}`, 105, 287, {
                 align: "center",
               });

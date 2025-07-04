@@ -144,27 +144,22 @@ const QuestionListingPage = () => {
     const hiddenBlock = document.querySelector(".pdf-markdown");
     if (!hiddenBlock) return alert("PDF content not rendered yet");
     setToastMsg("📥 Preparing your PDF...");
-    setTimeout(() => {
-      const now = new Date();
-      const rawTimestamp = `${now.getDate()}_${now.toLocaleString("en-IN", {
-        month: "long",
-      })}_${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-      const safeTimestamp = rawTimestamp.replace(/:/g, "-"); // Replace colons with dashes
 
+    setTimeout(() => {
       html2pdf()
         .set({
           margin: 20,
-          filename: `${currentSubject.subject}_Questions_${safeTimestamp}.pdf`,
+          filename: `${currentSubject.subject}_Questions.pdf`,
           html2canvas: { scale: 2 },
           jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
           pagebreak: { mode: ["avoid-all", "css", "legacy"] },
           callback: (pdf) => {
-            const today = now.toLocaleDateString("en-IN", {
+            const totalPages = pdf.internal.getNumberOfPages();
+            const today = new Date().toLocaleDateString("en-IN", {
               day: "numeric",
               month: "short",
               year: "numeric",
             });
-            const totalPages = pdf.internal.getNumberOfPages();
 
             for (let i = 1; i <= totalPages; i++) {
               pdf.setPage(i);
@@ -182,9 +177,8 @@ const QuestionListingPage = () => {
         })
         .from(hiddenBlock)
         .save();
-
       setToastMsg("✅ PDF Downloaded Successfully!");
-    }, 100);
+    }, 100); // short delay to ensure render
   };
 
   const applyFilter = (questions, filter) => {

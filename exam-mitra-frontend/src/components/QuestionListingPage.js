@@ -232,7 +232,7 @@ const QuestionListingPage = () => {
     );
 
     setToastMsg("✅ DOCX Downloaded Successfully!");
-  }, 100); // enough delay for React to re-render
+  }, 500); // enough delay for React to re-render
 };
 
 

@@ -219,31 +219,51 @@ const QuestionListingPage = () => {
     );
 
     setToastMsg("📥 Preparing your DOCX...");
-    setExportQuestions(filtered); // trigger render of updated PDFExportBlock
+    setExportQuestions(filtered); // trigger PDFExportBlock re-render
 
-    // Wait for next render frame using a short delay
     let retries = 0;
+
     const tryDownload = () => {
       const updatedContent = document.querySelector(".pdf-markdown");
       const html = updatedContent?.innerHTML?.trim();
+
       if (!html && retries < 5) {
         retries++;
-        return setTimeout(tryDownload, 200); // try again
+        return setTimeout(tryDownload, 200);
       }
 
       if (!html) {
         return alert("Failed to generate DOCX content. Please retry.");
       }
 
-      downloadAsDocx(
-        html,
-        `${currentSubject.subject}_Questions_${getCurrentTimeStamp()}.docx`
-      );
+      const filename = `${
+        currentSubject.subject
+      }_Questions_${getCurrentTimeStamp()}.docx`;
+
+      // 🌐 Detect mobile device
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // 🔁 Fallback method for mobile
+        const blob = new Blob([html], {
+          type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        // ✅ Use original desktop method
+        downloadAsDocx(html, filename);
+      }
+
       setToastMsg("✅ DOCX Downloaded Successfully!");
     };
 
-    setExportQuestions(filtered);
-    setTimeout(tryDownload, 300);
+    setTimeout(tryDownload, 300); // Delay to wait for updated render
   };
 
   const getCurrentTimeStamp = () => {

@@ -191,50 +191,60 @@ const QuestionListingPage = () => {
     }, 100); // short delay to ensure render
   };
 
- const handleFilteredDocx = (filterOption, sortOption) => {
-  let filtered = [...questions];
+  const handleFilteredDocx = (filterOption, sortOption) => {
+    let filtered = [...questions];
 
-  switch (filterOption) {
-    case "done":
-      filtered = filtered.filter((q) => q.status);
-      break;
-    case "answered":
-      filtered = filtered.filter((q) => q.answer && q.answer.trim() !== "");
-      break;
-    case "revision":
-      filtered = filtered.filter((q) => q.revision);
-      break;
-    case "below5":
-      filtered = filtered.filter((q) => q.marks < 5);
-      break;
-    case "above5":
-      filtered = filtered.filter((q) => q.marks >= 5);
-      break;
-    default:
-      break;
-  }
+    switch (filterOption) {
+      case "done":
+        filtered = filtered.filter((q) => q.status);
+        break;
+      case "answered":
+        filtered = filtered.filter((q) => q.answer && q.answer.trim() !== "");
+        break;
+      case "revision":
+        filtered = filtered.filter((q) => q.revision);
+        break;
+      case "below5":
+        filtered = filtered.filter((q) => q.marks < 5);
+        break;
+      case "above5":
+        filtered = filtered.filter((q) => q.marks >= 5);
+        break;
+      default:
+        break;
+    }
 
-  filtered.sort((a, b) =>
-    sortOption === "marks" ? b.marks - a.marks : b.frequency - a.frequency
-  );
-
-  setToastMsg("📥 Preparing your DOCX...");
-  setExportQuestions(filtered); // trigger render of updated PDFExportBlock
-
-  // Wait for next render frame using a short delay
-  setTimeout(() => {
-    const content = document.querySelector(".pdf-markdown");
-    if (!content) return alert("DOCX content not found");
-
-    downloadAsDocx(
-      content.innerHTML,
-      `${currentSubject.subject}_Questions_${getCurrentTimeStamp()}.docx`
+    filtered.sort((a, b) =>
+      sortOption === "marks" ? b.marks - a.marks : b.frequency - a.frequency
     );
 
-    setToastMsg("✅ DOCX Downloaded Successfully!");
-  }, 500); // enough delay for React to re-render
-};
+    setToastMsg("📥 Preparing your DOCX...");
+    setExportQuestions(filtered); // trigger render of updated PDFExportBlock
 
+    // Wait for next render frame using a short delay
+    let retries = 0;
+    const tryDownload = () => {
+      const updatedContent = document.querySelector(".pdf-markdown");
+      const html = updatedContent?.innerHTML?.trim();
+      if (!html && retries < 5) {
+        retries++;
+        return setTimeout(tryDownload, 200); // try again
+      }
+
+      if (!html) {
+        return alert("Failed to generate DOCX content. Please retry.");
+      }
+
+      downloadAsDocx(
+        html,
+        `${currentSubject.subject}_Questions_${getCurrentTimeStamp()}.docx`
+      );
+      setToastMsg("✅ DOCX Downloaded Successfully!");
+    };
+
+    setExportQuestions(filtered);
+    setTimeout(tryDownload, 300);
+  };
 
   const getCurrentTimeStamp = () => {
     const now = new Date();

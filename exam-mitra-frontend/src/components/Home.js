@@ -6,61 +6,63 @@ import Footer from "./Footer.js";
 import Header from "./Header.js";
 import { useUser } from "../context/userContext";
 
-// Feature list data for homepage display
 const features = [
   {
-    feature: "Upload Your Own Question Papers",
+    feature: "Upload or Browse Question Papers",
     description:
-      "Easily upload and manage your own question papers. No need to search—bring your content directly into the platform for a personalized experience.",
+      "Either upload your own papers or browse from a vast collection across branches — no more endless searching online.",
     image: "/images/papers.png",
   },
   {
-    feature: "Frequently Asked Topics",
+    feature: "Topic & Question Insights",
     description:
-      "Quickly spot the most important topics and questions, based on real exam patterns.",
+      "Understand what matters most with auto-highlighted frequently asked questions and high-weightage topics.",
     image: "/images/topics.png",
   },
   {
-    feature: "AI-Powered Answers",
+    feature: "Custom AI-Generated Answers",
     description:
-      "Need short summaries, detailed explanations, or simple English versions? Get customized answers instantly!",
+      "Get instant answers tailored to your preference — brief, detailed, bullet points, or simple English.",
     image: "/images/ai.png",
   },
   {
-    feature: "Progress Tracking",
+    feature: "Visual Study Progress Tracking",
     description:
-      "Stay on top of your study journey — mark questions as Done, Needs Revision, or Untouched.",
+      "Mark questions as Done, Needs Revision, or Untouched — and visually track your preparation journey.",
     image: "/images/tracking.png",
   },
   {
-    feature: "Export Revision PDFs",
+    feature: "One-Click PDF Export",
     description:
-      "Save your selected questions and AI answers into a clean PDF for easy offline revision.",
+      "Export selected questions with AI answers into a clean PDF for distraction-free offline revision.",
     image: "/images/export.png",
   },
 ];
 
-// How it works steps data for homepage section
 const howItWorksSteps = [
   {
     icon: "📘",
-    description: "Easily upload and organize your own question papers.",
-    tagline: "Upload your Question Papers.",
+    description:
+      "Start by uploading your question paper or browsing from our ready-to-use library.",
+    tagline: "Pick your paper.",
   },
   {
     icon: "🎯",
-    description: "View Frequently Asked Questions & Topics.",
-    tagline: "Focus on what matters most.",
+    description:
+      "We automatically highlight the most repeated and important questions for you.",
+    tagline: "See what matters.",
   },
   {
     icon: "🤖",
-    description: "Generate AI-Answers Based on Your Style.",
-    tagline: "Detailed, short, easy words — your choice.",
+    description:
+      "Choose your answer style and generate smart AI-powered answers instantly.",
+    tagline: "Learn your way.",
   },
   {
     icon: "📄",
-    description: "Track Your Progress & Export PDFs.",
-    tagline: "Stay organized and revise smarter.",
+    description:
+      "Track your progress and export a revision-ready PDF to study offline.",
+    tagline: "Revise like a topper.",
   },
 ];
 
@@ -86,11 +88,15 @@ const Home = () => {
         style={{ backgroundImage: "url('/images/hero-backgrounf.jpg')" }}
       >
         <div className="hero-text slide-in">
-          <h1>Smarter Exam Preparation Starts Here</h1>
+          <h1>
+            All Your Exam Prep Tools, <br /> In One Place
+          </h1>
           <p>
-            Upload and manage your own question papers, get AI-powered answers,
-            and track your progress — all in one place.
+          
+            Whether you’ve got your own papers or need some, get AI answers that
+            make sense and tools to help you revise smarter.
           </p>
+
           <div className="hero-buttons">
             <button
               className="btn-primary"
@@ -152,8 +158,8 @@ const Home = () => {
       <div className="callToActionContainer">
         <h3>Ready to Take Control of Your Exam Success?</h3>
         <p>
-          Upload and manage your own question papers, get AI-powered answers, and
-          track your progress — all in one place.
+          Upload and manage your own question papers, get AI-powered answers,
+          and track your progress — all in one place.
         </p>
         <button
           id="getStarted"

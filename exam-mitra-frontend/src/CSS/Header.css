@@ -184,9 +184,13 @@
     flex-direction: column;
     gap: 0.8rem;
     margin: 0rem 0 1rem 0;
+
+    & button {
+      margin-left: 0rem;
+    }
   }
 
- 
+
 
   .username {
     display: none;
@@ -196,12 +200,15 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: space-between;
+    align-items: center;
     padding: 1rem;
+    padding: 1rem 2rem;
+    width: 100vw;
+
   }
 
   .logo {
     width: 10rem;
-    margin-bottom: 0.5rem;
   }
 }
 

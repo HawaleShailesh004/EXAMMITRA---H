@@ -1,12 +1,18 @@
+// ExportFilterModal.jsx
 import React from "react";
-import "../CSS/ExportFilterModal.css"
+import "../CSS/ExportFilterModal.css";
 
-const ExportFilterModal = ({ isOpen, onClose, onConfirm }) => {
+const ExportFilterModal = ({ isOpen, onClose, onConfirm, onDocxExport }) => {
   const [selectedFilter, setSelectedFilter] = React.useState("all");
   const [selectedSort, setSelectedSort] = React.useState("frequency");
 
-  const handleSubmit = () => {
+  const handlePDFExport = () => {
     onConfirm(selectedFilter, selectedSort);
+    onClose();
+  };
+
+  const handleDocxExport = () => {
+    onDocxExport(selectedFilter, selectedSort);
     onClose();
   };
 
@@ -23,6 +29,7 @@ const ExportFilterModal = ({ isOpen, onClose, onConfirm }) => {
           onChange={(e) => setSelectedFilter(e.target.value)}
         >
           <option value="all">All</option>
+          <option value="answered">Only with Answers</option>
           <option value="done">Done Only</option>
           <option value="revision">Revision Only</option>
           <option value="below5">Marks &lt; 5</option>
@@ -39,8 +46,11 @@ const ExportFilterModal = ({ isOpen, onClose, onConfirm }) => {
         </select>
 
         <div className="modal-actions">
-          <button onClick={handleSubmit} className="confirm-btn">
-            Generate PDF
+          <button onClick={handlePDFExport} className="confirm-btn">
+            📄 Generate PDF
+          </button>
+          <button onClick={handleDocxExport} className="confirm-btn">
+            📝 Generate DOCX
           </button>
           <button onClick={onClose} className="cancel-btn">
             Cancel

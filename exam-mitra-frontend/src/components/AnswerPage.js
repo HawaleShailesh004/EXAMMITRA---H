@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useNavigate, useParams } from "react-router-dom";
 
+import promptTemplates from "../utils/promptTemplates.js";
 import "../CSS/Home.css";
 import "../CSS/AnswerPage.css";
 import Footer from "./Footer.js";
@@ -26,7 +27,7 @@ const AnswerPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedType, setSelectedType] = useState("Summary");
+  const [selectedType, setSelectedType] = useState("MitraMode");
 
   const [insightsVisible, setInsightsVisible] = useState(false);
 
@@ -146,7 +147,9 @@ const AnswerPage = () => {
   const handleGenerate = async () => {
     setIsGenerating(true);
     const questionText = questionData?.questionText || "";
-    const prompt = `Write a ${selectedType} for the following question:\n${questionText}`;
+    const promptFn =
+      promptTemplates[selectedType] || promptTemplates["Summary"];
+    const prompt = promptFn(questionText);
 
     try {
       const res = await fetch(
@@ -221,7 +224,10 @@ const AnswerPage = () => {
     return (
       <>
         <Header />
-        <div className="loading-div">⏳ Loading Question...</div>
+        <div className="loading-spinner">
+          <div className="loader"></div>
+          <p>Loading..</p>
+        </div>
         <Footer />
       </>
     );
@@ -276,6 +282,7 @@ const AnswerPage = () => {
                   <option value="StepByStep">Step-by-Step Explanation</option>
                   <option value="WithExamples">With Examples</option>
                   <option value="DefinitionOnly">Definition Only</option>
+                  <option value="MitraMode">💥 MitraMode™</option>
                 </select>
               </div>
               <button

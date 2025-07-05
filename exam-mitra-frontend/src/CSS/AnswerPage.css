@@ -221,7 +221,6 @@
 
 .answer {
   margin-top: 20px;
-  max-height: 400px;
   overflow-y: auto;
   padding-right: 10px;
   grid-column: span 2;
@@ -232,7 +231,6 @@
   line-height: 1.2rem;
   color: #444;
   white-space: pre-wrap;
-  text-align: justify;
   padding-top: 1rem;
 }
 
@@ -243,19 +241,22 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   padding-top: 1rem;
+  grid-column: span 2;
+  padding-right: 1rem;
 }
 
 .markdown-body h1,
 .markdown-body h2,
-.markdown-body h3 {
-  margin: 0;
+.markdown-body h3,
+.markdown-body h4 {
+  margin: 0.8rem 0 0 0;
   font-weight: 600;
 }
 
 .markdown-body p,
 li {
   margin: 0;
-  line-height: 1.5rem;
+  line-height: 2rem;
 }
 
 
@@ -280,6 +281,7 @@ li {
 
 .markdown-body strong {
   font-weight: bold;
+  line-height: 1.5;
 }
 
 .markdown-body ol>li>p {
@@ -418,7 +420,7 @@ li {
 @media (max-width: 768px) {
   .mainContainer {
     padding: 3rem 1rem;
-    margin-top: 6rem;
+    margin-top: 2rem;
   }
 
   .loaderText {
@@ -431,9 +433,13 @@ li {
 
 
   .subjectContainer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+
+    & .goBackBtn {
+      margin-bottom: 0;
+    }
   }
 
 
@@ -526,6 +532,38 @@ li {
     font-size: 0.8rem;
   }
 
+  .markdown-body {
+
+    & table {
+      margin: 0.75rem 0;
+    }
+
+    & table,
+    th,
+    td {
+      font-size: 0.6rem;
+      padding: 0.4rem;
+      line-height: 1.1;
+    }
+
+    & p,
+    li {
+      line-height: 2;
+    }
+
+    & h2,
+    h3,
+    h4 {
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    & ul,
+    ol {
+      padding-left: 1.3rem;
+
+    }
+  }
 
 
   .checkboxItem {
@@ -536,11 +574,4 @@ li {
   .insightMeta {
     font-size: 0.85rem;
   }
-}
-
-
-
-.answerBox .answerText {
-  max-height: 300px;
-  overflow-y: auto;
 }

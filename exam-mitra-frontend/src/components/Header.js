@@ -70,7 +70,7 @@ const Header = () => {
         <div className="nav-buttons">
           {user ? (
             <>
-              <span className="username">👤 {user.name}</span>
+              <span className="username">👤 {user.name.split(" ")[0]}</span>
               <button className="btn-secondary" onClick={handleLogout}>
                 Logout
               </button>

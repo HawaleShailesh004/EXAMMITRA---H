@@ -251,8 +251,11 @@ const QuestionListingPage = () => {
 
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
+           const filename2 = `${
+        currentSubject.subject
+      }_Questions_${getCurrentTimeStamp()}.html`;
         a.href = url;
-        a.download = filename;
+        a.download = filename2;
         a.click();
         URL.revokeObjectURL(url);
       } else {

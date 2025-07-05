@@ -6,6 +6,8 @@ const ExportFilterModal = ({ isOpen, onClose, onConfirm, onDocxExport }) => {
   const [selectedFilter, setSelectedFilter] = React.useState("all");
   const [selectedSort, setSelectedSort] = React.useState("frequency");
 
+  const isMobile = window.innerWidth <= 768;
+
   const handlePDFExport = () => {
     onConfirm(selectedFilter, selectedSort);
     onClose();
@@ -49,12 +51,32 @@ const ExportFilterModal = ({ isOpen, onClose, onConfirm, onDocxExport }) => {
           <button onClick={handlePDFExport} className="confirm-btn">
             📄 Generate PDF
           </button>
-          <button onClick={handleDocxExport} className="confirm-btn">
-            📝 Generate DOCX
-          </button>
-          <button onClick={onClose} className="cancel-btn">
-            Cancel
-          </button>
+          {!isMobile ? (
+            <>
+              <button onClick={handleDocxExport} className="confirm-btn">
+                📝 Generate DOCX
+              </button>
+              <button onClick={onClose} className="cancel-btn">
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={onClose} className="cancel-btn">
+                Cancel
+              </button>
+              <p
+                style={{
+                  fontSize: "0.85rem",
+                  color: "#888",
+                  marginTop: "0.5rem",
+                  textAlign: "center"
+                }}
+              >
+                🛈 DOCX export available on desktop only
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>

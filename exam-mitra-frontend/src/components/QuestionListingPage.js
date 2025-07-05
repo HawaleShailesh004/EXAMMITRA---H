@@ -191,43 +191,50 @@ const QuestionListingPage = () => {
     }, 100); // short delay to ensure render
   };
 
-  const handleFilteredDocx = (filterOption, sortOption) => {
-    let filtered = [...questions];
+ const handleFilteredDocx = (filterOption, sortOption) => {
+  let filtered = [...questions];
 
-    switch (filterOption) {
-      case "done":
-        filtered = filtered.filter((q) => q.status);
-        break;
-      case "answered":
-        filtered = filtered.filter((q) => q.answer && q.answer.trim() !== "");
-        alert(filtered.length);
-        break;
-      case "revision":
-        filtered = filtered.filter((q) => q.revision);
-        break;
-      case "below5":
-        filtered = filtered.filter((q) => q.marks < 5);
-        break;
-      case "above5":
-        filtered = filtered.filter((q) => q.marks >= 5);
-        break;
-      default:
-        break;
-    }
+  switch (filterOption) {
+    case "done":
+      filtered = filtered.filter((q) => q.status);
+      break;
+    case "answered":
+      filtered = filtered.filter((q) => q.answer && q.answer.trim() !== "");
+      break;
+    case "revision":
+      filtered = filtered.filter((q) => q.revision);
+      break;
+    case "below5":
+      filtered = filtered.filter((q) => q.marks < 5);
+      break;
+    case "above5":
+      filtered = filtered.filter((q) => q.marks >= 5);
+      break;
+    default:
+      break;
+  }
 
-    filtered.sort((a, b) =>
-      sortOption === "marks" ? b.marks - a.marks : b.frequency - a.frequency
-    );
+  filtered.sort((a, b) =>
+    sortOption === "marks" ? b.marks - a.marks : b.frequency - a.frequency
+  );
 
+  setToastMsg("📥 Preparing your DOCX...");
+  setExportQuestions(filtered); // trigger render of updated PDFExportBlock
+
+  // Wait for next render frame using a short delay
+  setTimeout(() => {
     const content = document.querySelector(".pdf-markdown");
     if (!content) return alert("DOCX content not found");
-    setExportQuestions(filtered);
+
     downloadAsDocx(
       content.innerHTML,
       `${currentSubject.subject}_Questions_${getCurrentTimeStamp()}.docx`
     );
+
     setToastMsg("✅ DOCX Downloaded Successfully!");
-  };
+  }, 100); // enough delay for React to re-render
+};
+
 
   const getCurrentTimeStamp = () => {
     const now = new Date();
@@ -277,8 +284,6 @@ const QuestionListingPage = () => {
     const newValue = !questions.find((q) => q.id === id)[field];
     debouncedUpdate(id, field, newValue);
   };
-
-
 
   const filteredQuestions = applyFilter(questions, filter);
 

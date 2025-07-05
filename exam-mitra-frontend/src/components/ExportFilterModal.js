@@ -73,7 +73,7 @@ const ExportFilterModal = ({ isOpen, onClose, onConfirm, onDocxExport }) => {
                   textAlign: "center"
                 }}
               >
-                🛈 DOCX export available on desktop only
+                🛈  Want editable notes? Use desktop to download DOCX!
               </p>
             </>
           )}
